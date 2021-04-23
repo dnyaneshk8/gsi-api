@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { Action, useExpressServer } from "routing-controllers";
 const dotenv = require("dotenv");
 dotenv.config();
+import path from "path";
 import bodyParser from "body-parser";
 import express from "express";
 import authService from "./utils/authService";
@@ -52,6 +53,11 @@ useExpressServer(app, {
   },
 });
 
+app.use(express.static(path.join(__dirname, "../build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../build"));
+});
+
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
@@ -60,4 +66,7 @@ db.once("open", function () {
   console.log("Starting app....");
   // run express application on port 3000
   app.listen(process.env.PORT || 3001);
+  app.on("ready", () =>
+    console.log("App started on port" + process.env.PORT || 3001)
+  );
 });
