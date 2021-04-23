@@ -9,8 +9,7 @@
     "build": "tsc",
     "tsc": "tsc",
     "start": "node ./dist/app.js",
-    "postinstall": "npm run build",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build"
+    "postinstall": "npm run build"
   },
   "author": "Dnyaneshwar Karli",
   "license": "ISC",
